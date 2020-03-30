@@ -1,38 +1,21 @@
-import time
-import re
 import urllib.request
-import json
 import os
 
 try:
-
-  print ("Start");
-  
   if(os.path.isdir("files") is False):
     os.mkdir("files");
   count = 0;
-
-  folderLine = '';
   folderName = '';
-  
-  groupNameLine = '';
-  fallbackNameLine = '';
-  
-  
   folderNameLine = ''
-  
   with open("Hangouts.json", encoding='utf8') as infile:
     for line in infile:
         if('"name"' in line):
             folderNameLine = line;
-            print ("Folder name found "+line);
             
         if('"fallback_name"' in line and folderNameLine == ''):
             folderNameLine = line;
-            print ("Fallback found "+line);
             
         if('"events"' in line):
-            print ("Using line "+folderNameLine);
             folderParts = folderNameLine.split('"');
             folderName = "files/"+folderParts[3];
             if(os.path.isdir(folderName) is False):
@@ -56,7 +39,6 @@ try:
             
             path = folderName+"/"+name;
             print ("Saving " + path);
-            #print (url);
             
             try:
               image = open(path,'wb');
@@ -68,6 +50,3 @@ try:
             count = count + 1;
 except Exception as inst:
   print("Error " + inst)
-  
-print("done")
-time.sleep(5)
