@@ -10,19 +10,37 @@ try:
   
   if(os.path.isdir("files") is False):
     os.mkdir("files");
-    
-  print ("Files folder created");
-  
   count = 0;
-  folderName = 'noChat';
+
+  folderLine = '';
+  folderName = '';
+  
+  groupNameLine = '';
+  fallbackNameLine = '';
+  
+  
+  folderNameLine = ''
+  
   with open("Hangouts.json", encoding='utf8') as infile:
     for line in infile:
-        if('"fallback_name"' in line):
-            folderParts = line.split('"');
+        if('"name"' in line):
+            folderNameLine = line;
+            print ("Folder name found "+line);
+            
+        if('"fallback_name"' in line and folderNameLine == ''):
+            folderNameLine = line;
+            print ("Fallback found "+line);
+            
+        if('"events"' in line):
+            print ("Using line "+folderNameLine);
+            folderParts = folderNameLine.split('"');
             folderName = "files/"+folderParts[3];
             if(os.path.isdir(folderName) is False):
-                os.mkdir(folderName);
+                 os.mkdir(folderName);
+            folderNameLine = '';
+                
         if('"url"' in line and 'googleusercontent' in line):
+            
             urlParts = line.split('"');
             url = urlParts[3];
                    
@@ -34,12 +52,11 @@ try:
             if("." not in name):
                 name = name + ".jpg";
                 
-            nameParts = name.split(".");
-            name = nameParts[0] + "-" + str(count) + "." + nameParts[1]; 
+            name = str(count) + "-" + name; 
             
             path = folderName+"/"+name;
-            print (path);
-            print (url);
+            print ("Saving " + path);
+            #print (url);
             
             try:
               image = open(path,'wb');
@@ -49,10 +66,6 @@ try:
               continue
               
             count = count + 1;
-            
-            #print(url)
-            
-    
 except Exception as inst:
   print("Error " + inst)
   
