@@ -50,3 +50,5 @@ try:
             count = count + 1;
 except Exception as inst:
   print("Error " + inst)
+  
+input("Press Enter to continue...")
