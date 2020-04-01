@@ -13,5 +13,5 @@ This script downloads all attachments from Hangouts history.
 1. Download only Hangouts history from [Google Takeout](https://takeout.google.com/settings/takeout)
 2. Install [Python](https://www.python.org/downloads/)
 3. Move ```start.py``` in same folder with ```Hangouts.json```
-4. Run start ```./start.py```
+4. Double click on ```start.py``` to start
 5. Script will run and download all images under ```files``` folder
